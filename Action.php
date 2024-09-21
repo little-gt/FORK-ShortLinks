@@ -122,12 +122,17 @@ class ShortLinks_Action extends Typecho_Widget implements Widget_Interface_Do
             $target = ShortLinks_Plugin::urlSafeB64Decode($requestString);
             $allow_redirect = false; // 默认不允许跳转
             // 检查 referer
+            if ($referer === null){
+                // referer 为空，转跳到首页
+                $this->response->redirect(Typecho_Widget::widget('Widget_Options')->siteUrl, 301);
+                exit();
+            }
             $allow_redirect = ShortLinks_Plugin::checkDomain($referer, $refererList);
             if (strpos($referer, $siteUrl) !== false) {
                 $allow_redirect = true;
             }
             if (!$allow_redirect) {
-                // referer 非法跳转到首页
+                // referer 非法，跳转到首页
                 $this->response->redirect(Typecho_Widget::widget('Widget_Options')->siteUrl, 301);
                 exit();
             }
