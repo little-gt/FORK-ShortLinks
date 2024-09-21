@@ -1,72 +1,101 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>即将转跳到外部链接</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="refresh" content="{{delay}};url='{{url}}';">
-    <title>页面加载中,请稍候...</title>
-    <style type="text/css">html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline
-    }
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    body {
-        background: #3498db;
-    }
+        header {
+            background-color: #2196F3;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
 
-    #loader-container {
-        width: 188px;
-        height: 188px;
-        color: white;
-        margin: 0 auto;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        border: 5px solid #3498db;
-        border-radius: 50%;
-        -webkit-animation: borderScale 1s infinite ease-in-out;
-        animation: borderScale 1s infinite ease-in-out;
-    }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
 
-    #loadingText {
-        font-family: 'Raleway', sans-serif;
-        font-size: 1.4em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-    }
+        .notification {
+            background-color: #ECEFF1;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
 
-    @-webkit-keyframes borderScale {
-        0% {
-            border: 5px solid white;
+        .notification h3 {
+            color: #2196F3;
+            margin-top: 0;
         }
-        50% {
-            border: 25px solid #3498db;
-        }
-        100% {
-            border: 5px solid white;
-        }
-    }
 
-    @keyframes borderScale {
-        0% {
-            border: 5px solid white;
+        .notification p {
+            color: #666;
         }
-        50% {
-            border: 25px solid #3498db;
+
+        .notification p strong {
+            font-weight: bold;
         }
-        100% {
-            border: 5px solid white;
+
+        .notification a {
+            color: #2196F3;
+            text-decoration: none;
         }
-    }</style>
+
+        .notification a:hover {
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 500px) {
+            body {
+                padding: 10px;
+            }
+            main {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="loader-container"><p id="loadingText">页面加载中...</p></div>
+    <header>
+        <h1>转跳到外部链接</h1>
+    </header>
+    <main>
+        <div class="notification">
+            <h3>提示信息</h3>
+            <p>您即将离开我们的网站，页面将在 <strong><span id="countdown">{{delay}}</span></strong> 秒后自动跳转到您想要访问的外部链接：<br>
+                <a href="{{url}}" target="_blank">{{url}}</a>
+            </p>
+        </div>
+    </main>
+    <script>
+        const delay = {{delay}};
+        let countdown = delay;
+        const countdownElement = document.getElementById('countdown');
+        
+        const interval = setInterval(() => {
+            if (countdown <= 0) {
+                clearInterval(interval);
+            } else {
+                countdown--;
+                countdownElement.textContent = countdown;
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
